@@ -1,0 +1,164 @@
+import java.util.ArrayList;
+import java.util.List;
+
+interface Account {
+    void deposit(double amount);
+    void withdraw(double amount);
+    void calculateInterest();
+    void displayInfo();
+    String getAccountNumber();
+}
+
+class SavingsAccount implements Account {
+    private String accountNumber;
+    private double balance;
+
+    public SavingsAccount(String accountNumber, double balance) {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+    }
+
+    @Override
+    public void deposit(double amount) {
+        balance += amount;
+        System.out.println("Deposit Successful!");
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        if (amount > balance) {
+            throw new IllegalArgumentException("Insufficient Balance!");
+        }
+        balance -= amount;
+        System.out.println("Withdrawal Successful!");
+    }
+
+    @Override
+    public void calculateInterest() {
+        double interest = balance * 0.05; // 5% interest rate
+        balance += interest;
+        System.out.println("Interest Calculated and Added to Balance!");
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Balance: " + balance);
+    }
+
+    @Override
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+}
+
+class CreditAccount implements Account {
+    private String accountNumber;
+    private double balance;
+
+    public CreditAccount(String accountNumber, double balance) {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+    }
+
+    @Override
+    public void deposit(double amount) {
+        balance += amount;
+        System.out.println("Deposit Successful!");
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        if (amount > balance) {
+            throw new IllegalArgumentException("Insufficient Balance!");
+        }
+        balance -= amount;
+        System.out.println("Withdrawal Successful!");
+    }
+
+    @Override
+    public void calculateInterest() {
+        // No interest calculation for credit account
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Balance: " + balance);
+    }
+
+    @Override
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+}
+
+class Bank {
+    private List<Account> accounts;
+
+    public Bank() {
+        accounts = new ArrayList<>();
+    }
+
+    public void createAccount(Account account) {
+        accounts.add(account);
+        System.out.println("Account Created Successfully!");
+    }
+
+    public void displayAccountInfo(String accountNumber) {
+        Account account = findAccount(accountNumber);
+        if (account != null) {
+            account.displayInfo();
+        } else {
+            throw new IllegalArgumentException("Account Not Found!");
+        }
+    }
+
+    public void deposit(String accountNumber, double amount) {
+        Account account = findAccount(accountNumber);
+        if (account != null) {
+            account.deposit(amount);
+        } else {
+            throw new IllegalArgumentException("Account Not Found!");
+        }
+    }
+
+    public void withdraw(String accountNumber, double amount) {
+        Account account = findAccount(accountNumber);
+        if (account != null) {
+            account.withdraw(amount);
+        } else {
+            throw new IllegalArgumentException("Account Not Found!");
+        }
+    }
+
+    private Account findAccount(String accountNumber) {
+        for (Account account : accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                return account;
+            }
+        }
+        return null;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Bank bank = new Bank();
+
+        Account savingsAccount = new SavingsAccount("S001", 1000.0);
+        Account creditAccount = new CreditAccount("C001", 500.0);
+
+        bank.createAccount(savingsAccount);
+        bank.createAccount(creditAccount);
+
+        bank.displayAccountInfo("S001");
+        bank.displayAccountInfo("C001");
+
+        bank.deposit("S001", 500.0);
+        bank.withdraw("C001", 200.0);
+
+        bank.displayAccountInfo("S001");
+        bank.displayAccountInfo("C001");
+    }
+}

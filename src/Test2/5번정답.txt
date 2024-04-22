@@ -1,0 +1,149 @@
+interface Member {
+    String getMemberId();
+    void borrowBook(Book book);
+    void returnBook(Book book);
+}
+
+class Book {
+    private String title;
+    private String author;
+    private boolean available;
+
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+        this.available = true;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public String getBookInfo() {
+        return "Title: " + title + ", Author: " + author + ", Available: " + available;
+    }
+}
+
+class FictionBook extends Book {
+    private String genre;
+
+    public FictionBook(String title, String author, String genre) {
+        super(title, author);
+        this.genre = genre;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+}
+
+class NonFictionBook extends Book {
+    private String subject;
+
+    public NonFictionBook(String title, String author, String subject) {
+        super(title, author);
+        this.subject = subject;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+}
+
+class Student implements Member {
+    private String memberId;
+
+    public Student(String memberId) {
+        this.memberId = memberId;
+    }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public void borrowBook(Book book) {
+        if (book.isAvailable()) {
+            book.setAvailable(false);
+            System.out.println("도서 대출 완료: " + book.getTitle());
+        } else {
+            System.out.println("해당 도서는 이미 대출 중입니다.");
+        }
+    }
+
+    public void returnBook(Book book) {
+        if (!book.isAvailable()) {
+            book.setAvailable(true);
+            System.out.println("도서 반납 완료: " + book.getTitle());
+        } else {
+            System.out.println("해당 도서는 대출 중이 아닙니다.");
+        }
+    }
+}
+
+class Faculty implements Member {
+    private String memberId;
+
+    public Faculty(String memberId) {
+        this.memberId = memberId;
+    }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public void borrowBook(Book book) {
+        if (book.isAvailable()) {
+            book.setAvailable(false);
+            System.out.println("도서 대출 완료: " + book.getTitle());
+        } else {
+            System.out.println("해당 도서는 이미 대출 중입니다.");
+        }
+    }
+
+    public void returnBook(Book book) {
+        if (!book.isAvailable()) {
+            book.setAvailable(true);
+            System.out.println("도서 반납 완료: " + book.getTitle());
+        } else {
+            System.out.println("해당 도서는 대출 중이 아닙니다.");
+        }
+    }
+}
+
+class Library {
+    private List<Book> bookList;
+    private List<Member> memberList;
+
+    public Library() {
+        bookList = new ArrayList<>();
+        memberList = new ArrayList<>();
+    }
+
+    public void addBook(Book book) {
+        bookList.add(book);
+    }
+
+    public void addMember(Member member) {
+        memberList.add(member);
+    }
+
+    public void borrowBook(Member member, Book book) {
+        member.borrowBook(book);
+    }
+
+    public void returnBook(Member member, Book book) {
+        member.returnBook(book);
+    }
+}

@@ -1,0 +1,65 @@
+interface Stack_by_interface {
+    int length();
+    int capacity();
+    void pop(double value);
+    double push();
+}
+
+class App_By_stack implements Stack_by_interface {
+    private double[] arr;
+    private int top;
+
+    public App_By_stack(int capacity) {
+        arr = new double[capacity];
+        top = 0;
+    }
+
+    @Override
+    public int length() {
+        return top;
+    }
+
+    @Override
+    public int capacity() {
+        return arr.length;
+    }
+
+    @Override
+    public void pop(double value) {
+        if (top < arr.length) {
+            arr[top] = value;
+            top++;
+        }
+    }
+
+    @Override
+    public double push() {
+        if (top > 0) {
+            top--;
+            return arr[top];
+        }
+        return 0.0;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        App_By_stack stack = new App_By_stack(5);
+        System.out.println("Stack capacity: " + stack.capacity());
+
+        stack.pop(1.5);
+        stack.pop(2.8);
+        stack.pop(3.7);
+
+        System.out.println("스택 길이" + stack.length());
+
+        double value = stack.push();
+        System.out.println("팝 영역 " + value);
+
+        stack.pop(4.2);
+        stack.pop(5.9);
+        stack.pop(6.4); // This push will not be executed as the stack is full
+
+        System.out.println("스택 길이 " + stack.length());
+    }
+}

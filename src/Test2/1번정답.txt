@@ -1,0 +1,76 @@
+public class Ex33 {
+	static Scanner sc = new Scanner(System.in);
+	private double area;
+	final double PI = 3.141592;
+
+	public Ex33() {
+		this.area = 0;
+	}
+
+	public void circle() {
+		int r;
+
+		System.out.println("\n**** 원의 넓이 ****");
+		System.out.print("반지름 : ");	r = sc.nextInt();
+
+		area = r * r * PI;
+		output();
+	}
+
+	public void triangle() {
+		int b, h;
+
+		System.out.println("\n**** 삼각형의 넓이 ****");
+		System.out.print("밑  변 : ");	b = sc.nextInt();
+		System.out.print("높  이 : ");	h = sc.nextInt();
+
+		area = (double)b * h / 2;
+		output();
+	}
+
+	public void trapezoid() {
+		int a, b, h;
+
+		System.out.println("\n**** 사다리꼴의 넓이 ****");
+		System.out.print("아랫변 : ");	a = sc.nextInt();
+		System.out.print("윗  변 : ");	b = sc.nextInt();
+		System.out.print("높  이 : ");	h = sc.nextInt();
+
+		area = (double)(a + b) * h / 2;
+		output();
+	}
+
+	public void output() {
+		System.out.printf("넓이 : %.2f\n\n", area);
+	}
+
+	public int menu() {
+		int n;
+
+		System.out.println("**** 도형선택 ****");
+		System.out.println("1. 삼각형");
+		System.out.println("2. 원");
+		System.out.println("3. 사다리꼴");
+		System.out.println("4. 종료");
+		System.out.print("선택 : ");
+		n = sc.nextInt();
+
+		switch (n) {
+			case 1 :	triangle();		break;
+			case 2 :	circle();		break;
+			case 3 :	trape();	break;
+			case 4 :	System.out.println("\n감사합니다^.^");
+		}
+		
+		return n;
+	}
+
+	public static void main(String[] args) {
+		Ex33 ob = new Ex33();
+		
+		while(true){
+			if(ob.menu() == 4) break;;
+		}
+		sc.close();
+	}
+}

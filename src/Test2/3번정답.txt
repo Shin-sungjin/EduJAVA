@@ -1,0 +1,29 @@
+class Robot {
+    private String name;
+    private String function;
+
+    public Robot(String name, String function) {
+        this.name = name;
+        this.function = function;
+    }
+
+    public String getFunction() {
+        return function;
+    }
+
+    public String performFunction(Robot robot) {
+        return this.name + "이(가) " + robot.name + "과(와) 협력하여 " + robot.function + "을(를) 수행합니다.";
+    }
+}
+
+public class SpaceExploration {
+    public static void main(String[] args) {
+        Robot robot1 = new Robot("로봇1", "화재 진압");
+        Robot robot2 = new Robot("로봇2", "물자 운반");
+        Robot robot3 = new Robot("로봇3", "우주 정비");
+
+        System.out.println(robot1.performFunction(robot2));
+        System.out.println(robot2.performFunction(robot3));
+        System.out.println(robot3.performFunction(robot1));
+    }
+}
